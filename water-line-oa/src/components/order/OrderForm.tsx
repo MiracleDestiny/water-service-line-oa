@@ -25,6 +25,7 @@ import {
 import { Input } from "../ui/input";
 import { Liff } from "@line/liff";
 import { createOrder } from "@/app/order/action";
+import { useState } from "react";
 
 const DEFAULT_PRODUCT_ID = 1;
 
@@ -54,15 +55,26 @@ export default function OrderForm({
   const form = useForm<OrderFormData>({
     resolver: zodResolver(FormSchema),
   });
+  const [isLoading, setIsLoading] = useState(false);
 
   function onSubmit(data: FormData) {
     if (liffError) return;
     if (!liff) return;
+    setIsLoading(true);
     const orderData = {
       ...data,
       products: [{ productId: DEFAULT_PRODUCT_ID, quantity: data.waterAmount }],
     };
-    createOrder(orderData, liff);
+    createOrder(orderData, liff).then((res) => {
+      setIsLoading(false);
+      if (res) {
+        alert("Order created successfully");
+        form.reset();
+      } else {
+        alert("Failed to create order");
+      }
+      window.location.reload();
+    });
     console.log(orderData);
   }
 
@@ -161,7 +173,17 @@ export default function OrderForm({
           )}
         />
         <div className="flex justify-center">
-          <Button type="submit">ส่ง Order</Button>
+          <Button
+            type="submit"
+            disabled={isLoading} // Disable button while loading
+            className={
+              isLoading
+                ? "bg-gray-400 cursor-not-allowed"
+                : "bg-black-500 hover:bg-black-600"
+            }
+          >
+            ส่ง Order
+          </Button>
         </div>
       </form>
     </Form>
