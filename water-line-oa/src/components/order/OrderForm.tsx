@@ -12,7 +12,6 @@ import { Calendar } from "@/components/ui/calendar";
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -39,7 +38,9 @@ export default function OrderForm() {
     resolver: zodResolver(FormSchema),
   });
 
-  function onSubmit(data: z.infer<typeof FormSchema>) {}
+  function onSubmit(data: z.infer<typeof FormSchema>) {
+    console.log(data);
+  }
 
   return (
     <Form {...form}>
@@ -50,7 +51,7 @@ export default function OrderForm() {
             <FormItem className="flex flex-col">
               <FormLabel>ชื่อผู้ติดต่อ</FormLabel>
               <FormControl>
-                <Input></Input>
+                <Input onChange={field.onChange}></Input>
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -62,7 +63,7 @@ export default function OrderForm() {
             <FormItem className="flex flex-col">
               <FormLabel>ปริมาณน้ำเปล่า (แพ็ค)</FormLabel>
               <FormControl>
-                <Input></Input>
+                <Input onChange={field.onChange}></Input>
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -75,7 +76,7 @@ export default function OrderForm() {
             <FormItem className="flex flex-col">
               <FormLabel>สถานที่จัดส่ง</FormLabel>
               <FormControl>
-                <Input></Input>
+                <Input onChange={field.onChange}></Input>
               </FormControl>
               <FormMessage />
             </FormItem>

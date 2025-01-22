@@ -1,6 +1,4 @@
 import type { Liff } from "@line/liff";
-import Head from "next/head";
-import styles from "../../../styles/Home.module.css";
 import OrderForm from "./OrderForm";
 
 export default function Order({
