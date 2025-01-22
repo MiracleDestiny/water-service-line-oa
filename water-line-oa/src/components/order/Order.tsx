@@ -10,9 +10,11 @@ export default function Order({
 }) {
   return (
     <main
-      className={`bg-gradient-to-b from-black to-slate-500 min-h-screen text-white flex flex-col items-center justify-center`}
+      className={`bg-gradient-to-b from-black to-slate-500 min-h-screen text-white flex flex-col items-center justify-center w-full h-full`}
     >
-      <h1 className="text-4xl font-bold">Ordering Water Tech Demo</h1>
+      <h1 className="text-4xl font-bold text-center w-full">
+        Ordering Water Tech Demo
+      </h1>
       {liff && <p>{liff.getIDToken()}</p>}
       {liff && (
         <p>
@@ -26,7 +28,7 @@ export default function Order({
         </p>
       )}
       {liffError && <p>An error has occured</p>}
-      <OrderForm />
+      <OrderForm liff={liff} liffError={liffError} />
     </main>
   );
 }

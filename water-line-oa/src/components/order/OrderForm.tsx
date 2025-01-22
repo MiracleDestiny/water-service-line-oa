@@ -23,23 +23,47 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { Input } from "../ui/input";
+import { Liff } from "@line/liff";
+import { createOrder } from "@/app/order/action";
+
+const DEFAULT_PRODUCT_ID = 1;
 
 const FormSchema = z.object({
   deliveryDate: z.date({
-    required_error: "A date of birth is required.",
+    required_error: "A delivery date is required.",
   }),
   name: z.string({}),
   waterAmount: z.number({}),
   location: z.string({}),
+  phoneNumber: z.string(),
 });
 
-export default function OrderForm() {
-  const form = useForm<z.infer<typeof FormSchema>>({
+type FormData = z.infer<typeof FormSchema>;
+
+export interface OrderFormData extends FormData {
+  products: { productId: number; quantity: number }[];
+}
+
+export default function OrderForm({
+  liff,
+  liffError,
+}: {
+  liff: Liff | null;
+  liffError: string | null;
+}) {
+  const form = useForm<OrderFormData>({
     resolver: zodResolver(FormSchema),
   });
 
-  function onSubmit(data: z.infer<typeof FormSchema>) {
-    console.log(data);
+  function onSubmit(data: FormData) {
+    if (liffError) return;
+    if (!liff) return;
+    const orderData = {
+      ...data,
+      products: [{ productId: DEFAULT_PRODUCT_ID, quantity: data.waterAmount }],
+    };
+    createOrder(orderData, liff);
+    console.log(orderData);
   }
 
   return (
@@ -50,6 +74,18 @@ export default function OrderForm() {
           render={({ field }) => (
             <FormItem className="flex flex-col">
               <FormLabel>ชื่อผู้ติดต่อ</FormLabel>
+              <FormControl>
+                <Input onChange={field.onChange}></Input>
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          name="phoneNumber"
+          render={({ field }) => (
+            <FormItem className="flex flex-col">
+              <FormLabel>เบอร์โทรศัพท์</FormLabel>
               <FormControl>
                 <Input onChange={field.onChange}></Input>
               </FormControl>
