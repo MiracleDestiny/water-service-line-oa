@@ -92,7 +92,9 @@ export default function OrderForm() {
                 <PopoverTrigger asChild>
                   <FormControl>
                     <Button
-                      className={cn("w-[240px] pl-3 text-left font-normal border border-white")}
+                      className={cn(
+                        "w-[240px] pl-3 text-left font-normal border border-white"
+                      )}
                     >
                       {field.value ? (
                         format(field.value, "dd/MM/yyyy")
@@ -109,7 +111,7 @@ export default function OrderForm() {
                     selected={field.value}
                     onSelect={field.onChange}
                     disabled={(date) =>
-                      date < new Date() || date < new Date("1900-01-01") 
+                      date < new Date() || date < new Date("1900-01-01")
                     }
                     initialFocus
                   />
@@ -119,7 +121,9 @@ export default function OrderForm() {
             </FormItem>
           )}
         />
-        <Button type="submit">ส่ง Order</Button>
+        <div className="flex justify-center">
+          <Button type="submit">ส่ง Order</Button>
+        </div>
       </form>
     </Form>
   );
