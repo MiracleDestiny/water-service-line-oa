@@ -99,7 +99,9 @@ export default function OrderForm({
             <FormItem className="flex flex-col">
               <FormLabel>ปริมาณน้ำเปล่า (แพ็ค)</FormLabel>
               <FormControl>
-                <Input onChange={field.onChange}></Input>
+                <Input
+                  onChange={(e) => field.onChange(Number(e.target.value) || 0)}
+                ></Input>
               </FormControl>
               <FormMessage />
             </FormItem>
