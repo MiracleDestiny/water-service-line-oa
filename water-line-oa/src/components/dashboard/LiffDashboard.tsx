@@ -5,7 +5,7 @@ import Dashboard from "@/components/dashboard/Dashboard";
 import { Liff } from "@line/liff";
 import React, { useEffect, useState } from "react";
 
-export default async function LiffDashboard({
+export default function LiffDashboard({
   orders,
 }: {
   orders: OrderWithDetails[];
